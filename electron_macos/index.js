@@ -4,6 +4,7 @@ const { app, BrowserWindow, Menu, MenuItem, ipcMain, shell } = require("electron
 const path = require("path");
 const url = require("url");
 const fs = require("fs");
+const steam = require("./steam");
 const asyncLock = require("async-lock");
 
 const isDev = process.argv.indexOf("--dev") >= 0;
@@ -54,13 +55,6 @@ function createWindow() {
     if (isLocal) {
         win.loadURL("http://localhost:3005");
     } else {
-        console.log(
-            url.format({
-                pathname: path.join(__dirname, "index.html"),
-                protocol: "file:",
-                slashes: true,
-            })
-        );
         win.loadURL(
             url.format({
                 pathname: path.join(__dirname, "index.html"),
@@ -284,3 +278,6 @@ ipcMain.on("fs-job", async (event, arg) => {
     const result = await performFsJob(arg);
     event.reply("fs-response", { id: arg.id, result });
 });
+
+steam.init(isDev);
+steam.listen();

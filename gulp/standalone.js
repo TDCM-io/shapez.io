@@ -36,7 +36,7 @@ function gulptasksStandalone($, gulp) {
             suffix: "macos",
             taskPrefix: "macos.",
             electronBaseDir: path.join(__dirname, "..", "electron_macos"),
-            steam: false,
+            steam: true,
         },
     ];
 
