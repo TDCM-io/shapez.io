@@ -31,6 +31,13 @@ function gulptasksStandalone($, gulp) {
             electronBaseDir: path.join(__dirname, "..", "electron_wegame"),
             steam: false,
         },
+        {
+            tempDestDir: path.join(__dirname, "..", "tmp_standalone_files_macos"),
+            suffix: "macos",
+            taskPrefix: "macos.",
+            electronBaseDir: path.join(__dirname, "..", "electron_macos"),
+            steam: false,
+        },
     ];
 
     for (const { tempDestDir, suffix, taskPrefix, electronBaseDir, steam } of targets) {
@@ -127,7 +134,7 @@ function gulptasksStandalone($, gulp) {
 
         /**
          *
-         * @param {'win32'|'linux'} platform
+         * @param {'win32'|'linux'|'darwin'} platform
          * @param {'x64'|'ia32'} arch
          * @param {function():void} cb
          */
@@ -201,6 +208,9 @@ function gulptasksStandalone($, gulp) {
         gulp.task(taskPrefix + "standalone.package.prod.linux64", cb =>
             packageStandalone("linux", "x64", cb)
         );
+        gulp.task(taskPrefix + "standalone.package.prod.darwinx64", cb =>
+            packageStandalone("darwin", "x64", cb)
+        );
 
         gulp.task(
             taskPrefix + "standalone.package.prod",
@@ -208,7 +218,8 @@ function gulptasksStandalone($, gulp) {
                 taskPrefix + "standalone.prepare",
                 gulp.parallel(
                     taskPrefix + "standalone.package.prod.win64",
-                    taskPrefix + "standalone.package.prod.linux64"
+                    taskPrefix + "standalone.package.prod.linux64",
+                    taskPrefix + "standalone.package.prod.darwinx64"
                 )
             )
         );

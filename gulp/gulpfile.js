@@ -310,7 +310,7 @@ gulp.task(
 
 // Builds everything (standalone-prod)
 
-for (const prefix of ["", "china.", "wegame."]) {
+for (const prefix of ["", "china.", "wegame.", "macos."]) {
     gulp.task(
         prefix + "step.standalone-prod.code",
         gulp.series("sounds.fullbuildHQ", "translations.fullBuild", prefix + "js.standalone-prod")
@@ -357,6 +357,12 @@ gulp.task(
 gulp.task(
     "wegame.main.standalone",
     gulp.series("wegame.build.standalone-prod", "wegame.standalone.package.prod")
+);
+
+// macos
+gulp.task(
+    "macos.main.standalone",
+    gulp.series("macos.build.standalone-prod", "macos.standalone.package.prod")
 );
 
 // all (except wegame)

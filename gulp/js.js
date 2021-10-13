@@ -255,6 +255,22 @@ function gulptasksJS($, gulp, buildFolder, browserSync) {
             )
             .pipe(gulp.dest(buildFolder));
     });
+
+    gulp.task("macos.js.standalone-prod", () => {
+        return gulp
+            .src("../src/js/main.js")
+            .pipe(
+                $.webpackStream(
+                    requireUncached("./webpack.production.config.js")({
+                        enableAssert: false,
+                        environment: "prod",
+                        es6: false,
+                        standalone: true,
+                    })
+                )
+            )
+            .pipe(gulp.dest(buildFolder));
+    });
 }
 
 module.exports = {
